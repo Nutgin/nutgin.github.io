@@ -14,9 +14,8 @@
   </entry>
   <entry>
     <title>单例模式的五种写法</title>
-    <url>/2021/02/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<p>#单例模式的五种写法</p>
-<p>##一. 懒汉式</p>
+    <url>/2021/02/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/</url>
+    <content><![CDATA[<p>##一. 懒汉式</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class LHan &#123;  </span><br><span class="line"></span><br><span class="line">    private static LHan instance;  </span><br><span class="line"></span><br><span class="line">    private LHan();  </span><br><span class="line"></span><br><span class="line">    public static LHan getInstance()&#123;  </span><br><span class="line">        if( instance  &#x3D;&#x3D; null )&#123;  </span><br><span class="line">            instance &#x3D; new LHan();</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>懒汉式，顾名思义就是实例在用到的时候才去创建，“比较懒”，用的时候才去检查有没有实例，如果有则返回，没有则新建。有线程安全和线程不安全两种写法，区别就是synchronized关键字。</p>
