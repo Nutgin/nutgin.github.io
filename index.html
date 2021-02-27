@@ -242,7 +242,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -255,7 +255,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/02/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/" class="post-title-link" itemprop="url">单例模式的五种写法</a>
+          <a href="/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/" class="post-title-link" itemprop="url">单例模式的五种写法</a>
         </h2>
 
         <div class="post-meta-container">
@@ -265,10 +265,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-02-27 09:30:26 / 修改时间：09:33:02" itemprop="dateCreated datePublished" datetime="2021-02-27T09:30:26+08:00">2021-02-27</time>
+      <time title="创建时间：2021-03-01 09:01:36" itemprop="dateCreated datePublished" datetime="2021-03-01T09:01:36+08:00">2021-03-01</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-27 10:08:18" itemprop="dateModified" datetime="2021-02-27T10:08:18+08:00">2021-02-27</time>
+      </span>
 
   
   
@@ -280,8 +286,8 @@
       <span class="post-meta-item-text">Changyan：</span>
     
     
-      <a title="changyan" href="/2021/02/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::http://example.com/2021/02/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/" class="cy_cmt_count" data-xid="2021/02/27/单例模式的写法/" itemprop="commentCount"></span>
+      <a title="changyan" href="/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::http://example.com/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/" class="cy_cmt_count" data-xid="2021/03/01/单例模式的写法/" itemprop="commentCount"></span>
       </a>
     
   </span>
@@ -296,28 +302,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="一-懒汉式"><a href="#一-懒汉式" class="headerlink" title="一. 懒汉式"></a>一. 懒汉式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class LHan &#123;  </span><br><span class="line"></span><br><span class="line">    private static LHan instance;  </span><br><span class="line"></span><br><span class="line">    private LHan();  </span><br><span class="line"></span><br><span class="line">    public static LHan getInstance()&#123;  </span><br><span class="line">        if( instance  &#x3D;&#x3D; null )&#123;  </span><br><span class="line">            instance &#x3D; new LHan();</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>懒汉式，顾名思义就是实例在用到的时候才去创建，“比较懒”，用的时候才去检查有没有实例，如果有则返回，没有则新建。有线程安全和线程不安全两种写法，区别就是synchronized关键字。</p>
-<h2 id="二-饿汉式"><a href="#二-饿汉式" class="headerlink" title="二. 饿汉式"></a>二. 饿汉式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class EHan&#123;  </span><br><span class="line"></span><br><span class="line">    private static EHan instance &#x3D; new EHan();</span><br><span class="line">    </span><br><span class="line">    private EHan();</span><br><span class="line">    </span><br><span class="line">    public static EHan getInstance()&#123;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>饿汉式，从名字上也很好理解，就是“比较勤”，实例在初始化的时候就已经建好了，不管你有没有用到，都先建好了再说。好处是没有线程安全的问题，坏处是浪费内存空间。</p>
-<h2 id="三-双检锁"><a href="#三-双检锁" class="headerlink" title="三. 双检锁"></a>三. 双检锁</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class DoubleCheck&#123;</span><br><span class="line"></span><br><span class="line">    private static DoubleCheck instance;</span><br><span class="line">    </span><br><span class="line">    private DoubleCheck()&#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    public static DoubleCheck getInstance()&#123;</span><br><span class="line">        if (instance &#x3D;&#x3D; null )&#123;</span><br><span class="line">            synchronized (DoubleCheck.class)&#123;</span><br><span class="line">                if( instance &#x3D;&#x3D; null )&#123; </span><br><span class="line">                    instance &#x3D; new DoubleCheck();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>双检锁，又叫双重校验锁，综合了懒汉式和饿汉式两者的优缺点整合而成。看上面代码实现中，特点是在synchronized关键字内外都加了一层 if 条件判断，这样既保证了线程安全，又比直接上锁提高了执行效率，还节省了内存空间。</p>
-<h2 id="四-静态内部类"><a href="#四-静态内部类" class="headerlink" title="四. 静态内部类"></a>四. 静态内部类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton&#123;</span><br><span class="line"></span><br><span class="line">    private static class SingletonHolder &#123;</span><br><span class="line">        private static final Singleton INSTANCE &#x3D; new Singleton();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private Singleton()&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    public static final Singleton getInstance()&#123;</span><br><span class="line">        return SingletonHolder.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>静态内部类的方式效果类似双检锁，但实现更简单。但这种方式只适用于静态域的情况，双检锁方式可在实例域需要延迟初始化时使用。</p>
-<h2 id="五-枚举"><a href="#五-枚举" class="headerlink" title="五.枚举"></a>五.枚举</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public enum Singleton&#123;</span><br><span class="line"></span><br><span class="line">    INSTANCE;</span><br><span class="line">    </span><br><span class="line">    public void anyMethod()&#123;&#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>枚举的方式是比较少见的一种实现方式，但是看上面的代码实现，却更简洁清晰。并且她还自动支持序列化机制，绝对防止多次实例化。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一般情况下，  </p>
-<ol>
-<li>懒汉式（包含线程安全和线程不安全两种方式）都比较少用；  </li>
-<li>饿汉式和双检锁都可以使用，可根据具体情况自主选择；  </li>
-<li>在要明确实现 lazy loading 效果时，可以考虑静态内部类的实现方式；  </li>
-<li>若涉及到反序列化创建对象时，也可以尝试使用枚举方式。</li>
-</ol>
-
+          <p>##一. 懒汉式</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -370,10 +363,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-02-26 17:01:36 / 修改时间：17:02:19" itemprop="dateCreated datePublished" datetime="2021-02-26T17:01:36+08:00">2021-02-26</time>
+      <time title="创建时间：2021-02-26 17:01:36" itemprop="dateCreated datePublished" datetime="2021-02-26T17:01:36+08:00">2021-02-26</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-27 10:06:59" itemprop="dateModified" datetime="2021-02-27T10:06:59+08:00">2021-02-27</time>
+      </span>
 
   
   
@@ -401,7 +400,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Map&lt;String, Object&gt;&gt; merge(List&lt;Map&lt;String, Object&gt;&gt; m1, List&lt;Map&lt;String, Object&gt;&gt; m2)&#123;</span><br><span class="line"></span><br><span class="line">     m1.addAll(m2);</span><br><span class="line"></span><br><span class="line">     Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> m1.stream()</span><br><span class="line">             .collect(Collectors.groupingBy(o-&gt;&#123;</span><br><span class="line">                 <span class="comment">//暂存所有key</span></span><br><span class="line">                 set.addAll(o.keySet());</span><br><span class="line">                 <span class="comment">//按某个唯一字段进行分组</span></span><br><span class="line">                 <span class="keyword">return</span> o.get(<span class="string">&quot;FLAGSTR&quot;</span>);</span><br><span class="line">             &#125;)).entrySet().stream().map(o-&gt;&#123;</span><br><span class="line"></span><br><span class="line">                 <span class="comment">//合并</span></span><br><span class="line">                 Map&lt;String, Object&gt; map = o.getValue().stream().flatMap(m-&gt;&#123;</span><br><span class="line">                     <span class="keyword">return</span> m.entrySet().stream();</span><br><span class="line">                 &#125;).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a,b)-&gt;b));</span><br><span class="line"></span><br><span class="line">                 <span class="comment">//为没有的key赋值0</span></span><br><span class="line">                 set.stream().forEach(k-&gt;&#123;</span><br><span class="line">                     <span class="keyword">if</span>(!map.containsKey(k)) map.put(k, <span class="number">0</span>);</span><br><span class="line">                 &#125;);</span><br><span class="line"></span><br><span class="line">                 <span class="keyword">return</span> map;</span><br><span class="line">             &#125;).collect(Collectors.toList());</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+          <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Map&lt;String, Object&gt;&gt; merge(List&lt;Map&lt;String, Object&gt;&gt; m1, List&lt;Map&lt;String, Object&gt;&gt; m2)&#123;</span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">        m1.addAll(m2);</span><br><span class="line"></span><br><span class="line">        Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> m1.stream()</span><br><span class="line">                .collect(Collectors.groupingBy(o-&gt;&#123;</span><br><span class="line">                    <span class="comment">//暂存所有key</span></span><br><span class="line">                    set.addAll(o.keySet());</span><br><span class="line">                    <span class="comment">//按某个唯一字段进行分组</span></span><br><span class="line">                    <span class="keyword">return</span> o.get(<span class="string">&quot;FLAGSTR&quot;</span>);</span><br><span class="line">                &#125;)).entrySet().stream().map(o-&gt;&#123;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//合并</span></span><br><span class="line">                    Map&lt;String, Object&gt; map = o.getValue().stream().flatMap(m-&gt;&#123;</span><br><span class="line">                        <span class="keyword">return</span> m.entrySet().stream();</span><br><span class="line">                    &#125;).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a,b)-&gt;b));</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//为没有的key赋值0</span></span><br><span class="line">                    set.stream().forEach(k-&gt;&#123;</span><br><span class="line">                        <span class="keyword">if</span>(!map.containsKey(k)) map.put(k, <span class="number">0</span>);</span><br><span class="line">                    &#125;);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">return</span> map;</span><br><span class="line">                &#125;).collect(Collectors.toList());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
