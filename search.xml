@@ -12,4 +12,36 @@
     <content><![CDATA[<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Map&lt;String, Object&gt;&gt; merge(List&lt;Map&lt;String, Object&gt;&gt; m1, List&lt;Map&lt;String, Object&gt;&gt; m2)&#123;</span><br><span class="line"></span><br><span class="line">     m1.addAll(m2);</span><br><span class="line"></span><br><span class="line">     Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> m1.stream()</span><br><span class="line">             .collect(Collectors.groupingBy(o-&gt;&#123;</span><br><span class="line">                 <span class="comment">//暂存所有key</span></span><br><span class="line">                 set.addAll(o.keySet());</span><br><span class="line">                 <span class="comment">//按某个唯一字段进行分组</span></span><br><span class="line">                 <span class="keyword">return</span> o.get(<span class="string">&quot;FLAGSTR&quot;</span>);</span><br><span class="line">             &#125;)).entrySet().stream().map(o-&gt;&#123;</span><br><span class="line"></span><br><span class="line">                 <span class="comment">//合并</span></span><br><span class="line">                 Map&lt;String, Object&gt; map = o.getValue().stream().flatMap(m-&gt;&#123;</span><br><span class="line">                     <span class="keyword">return</span> m.entrySet().stream();</span><br><span class="line">                 &#125;).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a,b)-&gt;b));</span><br><span class="line"></span><br><span class="line">                 <span class="comment">//为没有的key赋值0</span></span><br><span class="line">                 set.stream().forEach(k-&gt;&#123;</span><br><span class="line">                     <span class="keyword">if</span>(!map.containsKey(k)) map.put(k, <span class="number">0</span>);</span><br><span class="line">                 &#125;);</span><br><span class="line"></span><br><span class="line">                 <span class="keyword">return</span> map;</span><br><span class="line">             &#125;).collect(Collectors.toList());</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
   </entry>
+  <entry>
+    <title>单例模式的五种写法</title>
+    <url>/2021/02/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<p>#单例模式的五种写法</p>
+<p>##一. 懒汉式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class LHan &#123;  </span><br><span class="line"></span><br><span class="line">    private static LHan instance;  </span><br><span class="line"></span><br><span class="line">    private LHan();  </span><br><span class="line"></span><br><span class="line">    public static LHan getInstance()&#123;  </span><br><span class="line">        if( instance  &#x3D;&#x3D; null )&#123;  </span><br><span class="line">            instance &#x3D; new LHan();</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>懒汉式，顾名思义就是实例在用到的时候才去创建，“比较懒”，用的时候才去检查有没有实例，如果有则返回，没有则新建。有线程安全和线程不安全两种写法，区别就是synchronized关键字。</p>
+<p>##二. 饿汉式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class EHan&#123;  </span><br><span class="line"></span><br><span class="line">    private static EHan instance &#x3D; new EHan();</span><br><span class="line">    </span><br><span class="line">    private EHan();</span><br><span class="line">    </span><br><span class="line">    public static EHan getInstance()&#123;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>饿汉式，从名字上也很好理解，就是“比较勤”，实例在初始化的时候就已经建好了，不管你有没有用到，都先建好了再说。好处是没有线程安全的问题，坏处是浪费内存空间。</p>
+<p>##三. 双检锁</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class DoubleCheck&#123;</span><br><span class="line"></span><br><span class="line">    private static DoubleCheck instance;</span><br><span class="line">    </span><br><span class="line">    private DoubleCheck()&#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    public static DoubleCheck getInstance()&#123;</span><br><span class="line">        if (instance &#x3D;&#x3D; null )&#123;</span><br><span class="line">            synchronized (DoubleCheck.class)&#123;</span><br><span class="line">                if( instance &#x3D;&#x3D; null )&#123; </span><br><span class="line">                    instance &#x3D; new DoubleCheck();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>双检锁，又叫双重校验锁，综合了懒汉式和饿汉式两者的优缺点整合而成。看上面代码实现中，特点是在synchronized关键字内外都加了一层 if 条件判断，这样既保证了线程安全，又比直接上锁提高了执行效率，还节省了内存空间。</p>
+<p>##四. 静态内部类</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Singleton&#123;</span><br><span class="line"></span><br><span class="line">    private static class SingletonHolder &#123;</span><br><span class="line">        private static final Singleton INSTANCE &#x3D; new Singleton();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private Singleton()&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    public static final Singleton getInstance()&#123;</span><br><span class="line">        return SingletonHolder.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>静态内部类的方式效果类似双检锁，但实现更简单。但这种方式只适用于静态域的情况，双检锁方式可在实例域需要延迟初始化时使用。</p>
+<p>##五.枚举</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public enum Singleton&#123;</span><br><span class="line"></span><br><span class="line">    INSTANCE;</span><br><span class="line">    </span><br><span class="line">    public void anyMethod()&#123;&#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>枚举的方式是比较少见的一种实现方式，但是看上面的代码实现，却更简洁清晰。并且她还自动支持序列化机制，绝对防止多次实例化。</p>
+<p>##总结<br>一般情况下，  </p>
+<ol>
+<li>懒汉式（包含线程安全和线程不安全两种方式）都比较少用；  </li>
+<li>饿汉式和双检锁都可以使用，可根据具体情况自主选择；  </li>
+<li>在要明确实现 lazy loading 效果时，可以考虑静态内部类的实现方式；  </li>
+<li>若涉及到反序列化创建对象时，也可以尝试使用枚举方式。</li>
+</ol>
+]]></content>
+  </entry>
 </search>
