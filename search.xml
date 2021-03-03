@@ -41,4 +41,84 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Map&lt;String, Object&gt;&gt; merge(List&lt;Map&lt;String, Object&gt;&gt; m1, List&lt;Map&lt;String, Object&gt;&gt; m2)&#123;</span><br><span class="line"></span><br><span class="line">     m1.addAll(m2);</span><br><span class="line"></span><br><span class="line">     Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> m1.stream()</span><br><span class="line">             .collect(Collectors.groupingBy(o-&gt;&#123;</span><br><span class="line">                 <span class="comment">//暂存所有key</span></span><br><span class="line">                 set.addAll(o.keySet());</span><br><span class="line">                 <span class="comment">//按某个唯一字段进行分组</span></span><br><span class="line">                 <span class="keyword">return</span> o.get(<span class="string">&quot;FLAGSTR&quot;</span>);</span><br><span class="line">             &#125;)).entrySet().stream().map(o-&gt;&#123;</span><br><span class="line"></span><br><span class="line">                 <span class="comment">//合并</span></span><br><span class="line">                 Map&lt;String, Object&gt; map = o.getValue().stream().flatMap(m-&gt;&#123;</span><br><span class="line">                     <span class="keyword">return</span> m.entrySet().stream();</span><br><span class="line">                 &#125;).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a,b)-&gt;b));</span><br><span class="line"></span><br><span class="line">                 <span class="comment">//为没有的key赋值0</span></span><br><span class="line">                 set.stream().forEach(k-&gt;&#123;</span><br><span class="line">                     <span class="keyword">if</span>(!map.containsKey(k)) map.put(k, <span class="number">0</span>);</span><br><span class="line">                 &#125;);</span><br><span class="line"></span><br><span class="line">                 <span class="keyword">return</span> map;</span><br><span class="line">             &#125;).collect(Collectors.toList());</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
   </entry>
+  <entry>
+    <title>linux mysql��ʱ�Զ�����ʵ��</title>
+    <url>/2021/03/03/backup/</url>
+    <content><![CDATA[<h2 id="��ʼʹ��"><a href="#��ʼʹ��" class="headerlink" title="��ʼʹ��"></a>��ʼʹ��</h2><p>�����ϲ����Ƕ��������Լ�ʹ�ã����Ǹ��ͻ������������mysql�����ǲ��ɻ�ȱ��һ���֣�����ͽ̴����ôȥʵ��mysql�Ķ�ʱ�Զ����ݹ��ܣ�Ϊ��ʵ��������ܣ�Ҳ�ǲ��˸��ֿӣ�������������ģ�����������ʵ������������������</p>
+<ol>
+<li>mysql_backup.sh ���ڱ�������</li>
+<li>mysql_restore.sh ���ڻָ�����</li>
+<li>remove_backup.sh ����ɾ��һ��ʱ����ǰ�ı����ļ�</li>
+</ol>
+<ul>
+<li>����ʹ��root�û������ģ�����û���Ȩ�޲����Ļ�����Ҫ sudo ��Ȩ������Ϳ�����Լ�����Ҫ��</li>
+<li>����Ҫ��Ҿ��� vi �Ĳ�������Ŷ���粻��Ļ���Ҫ��������˽��ˣ�����Ͳ�׸����</li>
+</ul>
+<h2 id="һ�����ݱ���"><a href="#һ�����ݱ���" class="headerlink" title="һ�����ݱ���"></a>һ�����ݱ���</h2><ol>
+<li>��������Ŀ¼<br>������ѡ���˰ѱ����ļ����� /data/backup/mysql���棬�ѽű����� /data/backup ����</li>
+</ol>
+<p>�ȴ����ļ���<br><code>mkdir -p /data/backup/mysql cd /data/backup</code></p>
+<ol start="2">
+<li>�����ű��ļ�<br>����mysql_backup.sh<br><code>vi mysql_backup.sh</code></li>
+</ol>
+<p>ճ������Ľű�����<br>``<br>#!/bin/bash</p>
+<h1 id="��Ҫ�L����Լ�������Y"><a href="#��Ҫ�L����Լ�������Y" class="headerlink" title="��Ҫ�Ļ����Լ�������Ŷ"></a>��Ҫ�Ļ����Լ�������Ŷ</h1><p>#db_user=’root’<br>#db_password=<code>cat /data/www/mysql_password</code><br>db_name=’baizhan’<br>backup_dir=’/data/backup/mysql/‘<br>current_time=$(date +’%Y-%m-%d_%H%M%S’)<br>filepath=$backup_dir$current_time’.sql.gz’<br>#�˴�û��ʹ�� $db_password $db_user, �Ѿ�д�뵽�����ļ���<br>echo ‘��ʼ�������ݿ�…’<br>mysqldump –defaults-extra-file=/data/backup/my_mysql.cnf  $db_name | gzip &gt; $filepath<br>echo ‘�����ɹ����ļ���Ϊ: ‘$filepath<br>``</p>
+<ul>
+<li>����Ľű�û��ʹ�õ� $db_passoword, ��Ҫ�Ļ������Ҳ���Բ��ô��������ļ���ֱ�Ӱ� -p$db_password -u$db_userƴ�ӵ� mysqldupm �������</li>
+<li>�ײ�ʹ�� gzip ����ѹ���Ļ������Խ�ʡ 80% �Ŀռ�</li>
+<li>mysql 5.6���ϻ���ʾ���������������벻��ȫ������һ�� notice ������Ҳ�ܵ����ɹ�</li>
+<li>���ֱ��ʹ������Ļ����ͻᱨ�����������</li>
+<li>mysqldump: [Warning] Using a password on the command line interface can be insecure.</li>
+<li>����������İ취���ǰ�����д�������ļ���ȥ���ļ����ݲο����£������ļ����ǿ������½�һ��</li>
+</ul>
+<p>�½������ļ�, �������ǵĵ�ǰĿ¼�� �� /data/backup<br><code>vi my_mysql.cnf</code></p>
+<p>��������ļ����ݣ������������һ�������������ļ���С����<br><code>[mysqldump] max_allowed_packet    = 400M host=127.0.0.1 user=root password=&#39;SgDGfsrfEi3#@%#%ugslp%z!dAP&#39; [mysql] host=127.0.0.1 user=root password=&#39;SgDGfsrfEi3#@%#%ugslp%z!dAP&#39;</code></p>
+<ul>
+<li>��λ�����������Ĳ����ĳ��Լ��ľͺ��ˣ��ɱ�©����һ��Ŷ</li>
+<li>���� mysqldump �µĲ����Ǹ�����������ʹ�õģ�mysql �µĲ����ǵ����ʱ��ʹ�õ�</li>
+</ul>
+<p>������Ļ�������shell�ű����Ѿ�д���ˣ����Ƕ�����ű���һ�¿�ִ��Ȩ��<br><code>chmod +x ./mysql_backup.sh</code></p>
+<p>�������ǾͿ���ʹ�������������������<br>``<br>sh ./mysql_backup.sh</p>
+<h1 id="�鿴һ�½��"><a href="#�鿴һ�½��" class="headerlink" title="�鿴һ�½��"></a>�鿴һ�½��</h1><p>ll ./mysql<br>``</p>
+<p>������Ϊֹ�����ǵĵ����ű��Ѿ�����ˣ����������ǵ���ű���</p>
+<h2 id="�������ݻָ�"><a href="#�������ݻָ�" class="headerlink" title="�������ݻָ�"></a>�������ݻָ�</h2><ol>
+<li>�����ű��ļ�<br>���յ�һ���Ĳ�������ʱ����Ӧ�ô��� /data/backup Ŀ¼�£���������<br><code>vi mysql_restore.sh</code></li>
+</ol>
+<p>ճ�����������<br>``<br>#!/bin/bash</p>
+<p>if [ -z $1 ] || [ ! -f $1 ]<br>then<br>    echo “������sqlѹ���ļ�(*.sql.gz)”<br>    exit 1<br>fi</p>
+<p>db_name=’baizhan’<br>base_dir=’/data/backup/mysql/‘<br>gz_sql_file=<code>basename $1</code></p>
+<p>file_ext=${gz_sql_file##*.}<br>if [ $file_ext != ‘gz’ ]<br>then<br>    echo ‘�ļ���ʽ����ȷ�������� .sql.gz �ļ�’<br>    exit 1<br>fi</p>
+<p>sql_file=${gz_sql_file%.*}<br>echo ‘��ѹ�ļ���…’<br>gzip -dc $base_dir$gz_sql_file &gt; $base_dir$sql_file<br>echo ‘��ѹ���.’<br>echo ‘��ʼ�������ݿ�…’</p>
+<p>mysql –defaults-extra-file=/data/backup/my_mysql.cnf $db_name &lt; $base_dir$sql_file</p>
+<p>if [ -f $base_dir$sql_file ]<br>then<br>    echo ‘ɾ����ʱ�ļ�.’<br>    rm -f $base_dir$sql_file<br>fi<br>echo ‘�������.’<br>``</p>
+<p>��������е������ļ����������ǵ�һ��ʱ�����������ļ���������һ����ʹ��</p>
+<p>�����ļ���ִ��Ȩ��<br><code>chmod +x ./mysql_restore.sh</code></p>
+<p>���Ͼ��ǵ���ű����ݣ�������ִ��һ��<br><code>sh ./mysql_restore.sh ./mysql/2018-11-30_223601.sql.gz</code></p>
+<p>���������ǵĵ�һ����������ֱ��д�����ļ������֣�����дĿ¼��������Ϊ����Ŀ¼֮�󣬿���ʹ��table�����Զ���ȫ������ʮ�ַ��㣬</p>
+<ul>
+<li>��ʵ�������κ��ļ��н��лָ���ִ��</li>
+<li>sh /data/backup/mysql_restore.sh /data/backup/mysql/2018-11-30_223601.sql.gz</li>
+<li>Ҳ��������</li>
+<li>sh /data/backup/mysql_restore.sh 2018-11-30_223601.sql.gz</li>
+</ul>
+<p>���������ǵĽű����Ѿ�д���ˣ���ʣ�´�����ʱ������ִ����</p>
+<h2 id="���������ƻ�����"><a href="#���������ƻ�����" class="headerlink" title="���������ƻ�����"></a>���������ƻ�����</h2><ol>
+<li>���Ӽƻ�����</li>
+</ol>
+<ul>
+<li>���ﲢû�н̴����ôʹ�� crontab, �����С��鲻��Ļ�����һ�¾��д���<br>``<br>crontab -e<h1 id="ճ����������ݣ�-��Ҹ����Լ�����Ҫ���lͿ�����"><a href="#ճ����������ݣ�-��Ҹ����Լ�����Ҫ���lͿ�����" class="headerlink" title="ճ����������ݣ� ��Ҹ����Լ�����Ҫ���ľͿ�����"></a>ճ����������ݣ� ��Ҹ����Լ�����Ҫ���ľͿ�����</h1>0 1,12 * * * /data/backup/mysql_backup.sh # ÿ���賿1�㣬����12�㱸��һ������</li>
+</ul>
+<h1 id="��ҿ�����ʹ������������Ϊ����Y��1������һ�Σ�����ֻ��Ҫ�鿴-ll-data-backup-mysql-����l��оͺ���"><a href="#��ҿ�����ʹ������������Ϊ����Y��1������һ�Σ�����ֻ��Ҫ�鿴-ll-data-backup-mysql-����l��оͺ���" class="headerlink" title="��ҿ�����ʹ������������Ϊ����Ŷ��1������һ�Σ�����ֻ��Ҫ�鿴 ll /data/backup/mysql ����ļ��оͺ���"></a>��ҿ�����ʹ������������Ϊ����Ŷ��1������һ�Σ�����ֻ��Ҫ�鿴 ll /data/backup/mysql ����ļ��оͺ���</h1><p>*/1 * * * * /data/backup/mysql_backup.sh<br>``</p>
+<h2 id="�g����£������Զ���������"><a href="#�g����£������Զ���������" class="headerlink" title="�ġ����£������Զ���������"></a>�ġ����£������Զ���������</h2><ol>
+<li>����ɾ���ļ��ű�<br>���ǻ�����/data/backup Ŀ¼���洴���ű���������ǽű�������<br>``<br>vi remove_backup.sh<h1 id="��������Lu�����"><a href="#��������Lu�����" class="headerlink" title="��������Ľű�����"></a>��������Ľű�����</h1></li>
+</ol>
+<p>#/bin/bash</p>
+<h1 id="ɾ��30��j�i���"><a href="#ɾ��30��j�i���" class="headerlink" title="ɾ��30��ǰ�ı���"></a>ɾ��30��ǰ�ı���</h1><p> find /data/backup/mysql -type f -mtime +30 | xargs rm -f<br>``</p>
+<p>��������ѡ�񱸷�����ֻ�������30��ģ���Ҹ�����Ҫ�����޸�<br>ͬ���ĵ��������ӿ�ִ��Ȩ��<br>``<br>chmod +x ./remove_backup.sh</p>
+<h1 id="ʹ�����������������ֶ�����Y"><a href="#ʹ�����������������ֶ�����Y" class="headerlink" title="ʹ�����������������ֶ�����Ŷ"></a>ʹ�����������������ֶ�����Ŷ</h1><p>./remove_backup.sh<br>``</p>
+<p>���������Ǿ�Ҫ�����Զ������ˣ����ӵ� crontab�У�����һ�����Զ�����һ����<br>``<br>crontab -e</p>
+<h1 id="����������aeu�����Y��������һ��"><a href="#����������aeu�����Y��������һ��" class="headerlink" title="����������ǽű�����Ŷ��������һ��"></a>����������ǽű�����Ŷ��������һ��</h1><p>0 1 * * * /data/backup/remove_backup.sh # ÿ���賿1�㣬�Զ�ɾ��30��ǰ�ı���<br>``</p>
+<h2 id="����"><a href="#����" class="headerlink" title="����"></a>����</h2><p>�󹦸�ɣ����Ͼ������е� mysql �Զ���ʱ���ݺ��ֶ��ָ��ű��ˣ������ʵĻ�����ӭ��λ����</p>
+]]></content>
+  </entry>
 </search>

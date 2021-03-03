@@ -22,28 +22,32 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="NutGin&#39;s Blog">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="��ʼʹ�������ϲ����Ƕ��������Լ�ʹ�ã����Ǹ��ͻ������������mysql�����ǲ��ɻ�ȱ��һ���֣�����ͽ̴����ôȥʵ��mysql�Ķ�ʱ�Զ����ݹ��ܣ�Ϊ��ʵ��������ܣ�Ҳ�ǲ��˸��ֿӣ�������������ģ�����������ʵ������������������  mysql_backup.sh ���ڱ�">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux mysql��ʱ�Զ�����ʵ��">
+<meta property="og:url" content="http://example.com/2021/03/03/backup/index.html">
 <meta property="og:site_name" content="NutGin&#39;s Blog">
+<meta property="og:description" content="��ʼʹ�������ϲ����Ƕ��������Լ�ʹ�ã����Ǹ��ͻ������������mysql�����ǲ��ɻ�ȱ��һ���֣�����ͽ̴����ôȥʵ��mysql�Ķ�ʱ�Զ����ݹ��ܣ�Ϊ��ʵ��������ܣ�Ҳ�ǲ��˸��ֿӣ�������������ģ�����������ʵ������������������  mysql_backup.sh ���ڱ�">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-03T06:30:29.000Z">
+<meta property="article:modified_time" content="2021-03-03T06:48:16.934Z">
 <meta property="article:author" content="NutGin">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/03/03/backup/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>NutGin's Blog</title>
+  <title>linux mysql��ʱ�Զ�����ʵ�� | NutGin's Blog</title>
   
 
 
@@ -174,9 +178,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -192,10 +197,9 @@
       <meta itemprop="name" content="NutGin's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/03/backup/" class="post-title-link" itemprop="url">linux mysql��ʱ�Զ�����ʵ��</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          linux mysql��ʱ�Զ�����ʵ��
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -215,6 +219,13 @@
               </span>
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
             </span>
   
   <span class="post-meta-item">
@@ -240,7 +251,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="��ʼʹ��"><a href="#��ʼʹ��" class="headerlink" title="��ʼʹ��"></a>��ʼʹ��</h2><p>�����ϲ����Ƕ��������Լ�ʹ�ã����Ǹ��ͻ������������mysql�����ǲ��ɻ�ȱ��һ���֣�����ͽ̴����ôȥʵ��mysql�Ķ�ʱ�Զ����ݹ��ܣ�Ϊ��ʵ��������ܣ�Ҳ�ǲ��˸��ֿӣ�������������ģ�����������ʵ������������������</p>
+        <h2 id="��ʼʹ��"><a href="#��ʼʹ��" class="headerlink" title="��ʼʹ��"></a>��ʼʹ��</h2><p>�����ϲ����Ƕ��������Լ�ʹ�ã����Ǹ��ͻ������������mysql�����ǲ��ɻ�ȱ��һ���֣�����ͽ̴����ôȥʵ��mysql�Ķ�ʱ�Զ����ݹ��ܣ�Ϊ��ʵ��������ܣ�Ҳ�ǲ��˸��ֿӣ�������������ģ�����������ʵ������������������</p>
 <ol>
 <li>mysql_backup.sh ���ڱ�������</li>
 <li>mysql_restore.sh ���ڻָ�����</li>
@@ -316,293 +327,66 @@
 <h1 id="����������aeu�����Y��������һ��"><a href="#����������aeu�����Y��������һ��" class="headerlink" title="����������ǽű�����Ŷ��������һ��"></a>����������ǽű�����Ŷ��������һ��</h1><p>0 1 * * * /data/backup/remove_backup.sh # ÿ���賿1�㣬�Զ�ɾ��30��ǰ�ı���<br>``</p>
 <h2 id="����"><a href="#����" class="headerlink" title="����"></a>����</h2><p>�󹦸�ɣ����Ͼ������е� mysql �Զ���ʱ���ݺ��ֶ��ָ��ű��ˣ������ʵĻ�����ӭ��λ����</p>
 
-      
     </div>
 
     
     
     
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束-------------</div>
+    
+</div>
+      
+    </div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="NutGin 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="NutGin 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="NutGin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="NutGin's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/" class="post-title-link" itemprop="url">单例模式的五种写法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-01 09:01:36" itemprop="dateCreated datePublished" datetime="2021-03-01T09:01:36+08:00">2021-03-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-27 11:28:56" itemprop="dateModified" datetime="2021-02-27T11:28:56+08:00">2021-02-27</time>
-              </span>
-
-          
-            <span id="/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="单例模式的五种写法" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="一-懒汉式"><a href="#一-懒汉式" class="headerlink" title="一. 懒汉式"></a>一. 懒汉式</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/26/%E9%80%9A%E8%BF%87jdk8%E7%89%B9%E6%80%A7%E5%B0%86list-Map-%E6%95%B0%E6%8D%AE%E6%8B%BC%E6%8E%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="NutGin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="NutGin's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/26/%E9%80%9A%E8%BF%87jdk8%E7%89%B9%E6%80%A7%E5%B0%86list-Map-%E6%95%B0%E6%8D%AE%E6%8B%BC%E6%8E%A5/" class="post-title-link" itemprop="url">通过jdk8特性将list<Map>数据拼接</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-26 17:01:36" itemprop="dateCreated datePublished" datetime="2021-02-26T17:01:36+08:00">2021-02-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-27 16:53:16" itemprop="dateModified" datetime="2021-02-27T16:53:16+08:00">2021-02-27</time>
-              </span>
-
-          
-            <span id="/2021/02/26/%E9%80%9A%E8%BF%87jdk8%E7%89%B9%E6%80%A7%E5%B0%86list-Map-%E6%95%B0%E6%8D%AE%E6%8B%BC%E6%8E%A5/" class="post-meta-item leancloud_visitors" data-flag-title="通过jdk8特性将list<Map>数据拼接" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/02/26/%E9%80%9A%E8%BF%87jdk8%E7%89%B9%E6%80%A7%E5%B0%86list-Map-%E6%95%B0%E6%8D%AE%E6%8B%BC%E6%8E%A5/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/26/%E9%80%9A%E8%BF%87jdk8%E7%89%B9%E6%80%A7%E5%B0%86list-Map-%E6%95%B0%E6%8D%AE%E6%8B%BC%E6%8E%A5/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>m1为第一个List<Map>集合，m2为第二个，且m1和m2有共同的唯一字段互相绑定</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/02/26/%E9%80%9A%E8%BF%87jdk8%E7%89%B9%E6%80%A7%E5%B0%86list-Map-%E6%95%B0%E6%8D%AE%E6%8B%BC%E6%8E%A5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%86%99%E6%B3%95/" rel="prev" title="单例模式的五种写法">
+      <i class="fa fa-chevron-left"></i> 单例模式的五种写法
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/26/you-title/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="NutGin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="NutGin's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/26/you-title/" class="post-title-link" itemprop="url">测试一下</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-02-26 09:35:57 / 修改时间：11:49:34" itemprop="dateCreated datePublished" datetime="2021-02-26T09:35:57+08:00">2021-02-26</time>
-            </span>
-
-          
-            <span id="/2021/02/26/you-title/" class="post-meta-item leancloud_visitors" data-flag-title="测试一下" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/02/26/you-title/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/26/you-title/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>艳辉神经病</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -649,6 +433,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%CA%BC%CA%B9%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.</span> <span class="nav-text">��ʼʹ��</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%D2%BB%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%DD%B1%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">2.</span> <span class="nav-text">һ�����ݱ���</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%D2%AA%EF%BF%BDL%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%BC%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDY"><span class="nav-number"></span> <span class="nav-text">��Ҫ�Ļ����Լ�������Ŷ</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EF%BF%BD%E9%BF%B4%D2%BB%EF%BF%BD%C2%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number"></span> <span class="nav-text">�鿴һ�½��</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%DD%BB%D6%B8%EF%BF%BD"><span class="nav-number">1.</span> <span class="nav-text">�������ݻָ�</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%C6%BB%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">2.</span> <span class="nav-text">���������ƻ�����</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%D5%B3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%DD%A3%EF%BF%BD-%EF%BF%BD%EF%BF%BD%D2%B8%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%BC%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D2%AA%EF%BF%BD%EF%BF%BD%EF%BF%BDl%CD%BF%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number"></span> <span class="nav-text">ճ����������ݣ� ��Ҹ����Լ�����Ҫ���ľͿ�����</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%D2%BF%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%B9%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CE%AA%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDY%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D2%BB%EF%BF%BD%CE%A3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%BB%EF%BF%BD%EF%BF%BD%D2%AA%EF%BF%BD%E9%BF%B4-ll-data-backup-mysql-%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDl%EF%BF%BD%EF%BF%BD%D0%BE%CD%BA%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number"></span> <span class="nav-text">��ҿ�����ʹ������������Ϊ����Ŷ��1������һ�Σ�����ֻ��Ҫ�鿴 ll &#x2F;data&#x2F;backup&#x2F;mysql ����ļ��оͺ���</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BDg%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%C2%A3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.</span> <span class="nav-text">�ġ����£������Զ���������</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDLu%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number"></span> <span class="nav-text">��������Ľű�����</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%C9%BE%EF%BF%BD%EF%BF%BD30%EF%BF%BD%EF%BF%BDj%EF%BF%BDi%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number"></span> <span class="nav-text">ɾ��30��ǰ�ı���</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%CA%B9%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDY"><span class="nav-number"></span> <span class="nav-text">ʹ�����������������ֶ�����Ŷ</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDaeu%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDY%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D2%BB%EF%BF%BD%EF%BF%BD"><span class="nav-number"></span> <span class="nav-text">����������ǽű�����Ŷ��������һ��</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.</span> <span class="nav-text">����</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
