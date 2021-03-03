@@ -42,9 +42,10 @@
 ]]></content>
   </entry>
   <entry>
-    <title></title>
+    <title>linux mysql定时自动备份实现</title>
     <url>/2021/03/03/backup/</url>
     <content><![CDATA[<h2 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h2><p>基本上不管是对于我们自己使用，还是给客户部署服务器，mysql备份是不可或缺的一部分，这里就教大家怎么去实现mysql的定时自动备份功能，为了实现这个功能，也是踩了各种坑，最后整理出来的，在这里我们实现了下面这三个功能</p>
+<span id="more"></span>
 <ul>
 <li>mysql_backup.sh 用于备份数据</li>
 <li>mysql_restore.sh 用于恢复数据</li>
