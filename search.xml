@@ -101,6 +101,14 @@
 ]]></content>
   </entry>
   <entry>
+    <title>通过jdk8特性将list&lt;Map&gt;数据拼接</title>
+    <url>/2021/02/26/%E9%80%9A%E8%BF%87jdk8%E7%89%B9%E6%80%A7%E5%B0%86list-Map-%E6%95%B0%E6%8D%AE%E6%8B%BC%E6%8E%A5/</url>
+    <content><![CDATA[<p>m1为第一个List<Map>集合，m2为第二个，且m1和m2有共同的唯一字段互相绑定</p>
+<span id="more"></span>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Map&lt;String, Object&gt;&gt; merge(List&lt;Map&lt;String, Object&gt;&gt; m1, List&lt;Map&lt;String, Object&gt;&gt; m2)&#123;</span><br><span class="line"></span><br><span class="line">     m1.addAll(m2);</span><br><span class="line"></span><br><span class="line">     Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> m1.stream()</span><br><span class="line">             .collect(Collectors.groupingBy(o-&gt;&#123;</span><br><span class="line">                 <span class="comment">//暂存所有key</span></span><br><span class="line">                 set.addAll(o.keySet());</span><br><span class="line">                 <span class="comment">//按某个唯一字段进行分组</span></span><br><span class="line">                 <span class="keyword">return</span> o.get(<span class="string">&quot;FLAGSTR&quot;</span>);</span><br><span class="line">             &#125;)).entrySet().stream().map(o-&gt;&#123;</span><br><span class="line"></span><br><span class="line">                 <span class="comment">//合并</span></span><br><span class="line">                 Map&lt;String, Object&gt; map = o.getValue().stream().flatMap(m-&gt;&#123;</span><br><span class="line">                     <span class="keyword">return</span> m.entrySet().stream();</span><br><span class="line">                 &#125;).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a,b)-&gt;b));</span><br><span class="line"></span><br><span class="line">                 <span class="comment">//为没有的key赋值0</span></span><br><span class="line">                 set.stream().forEach(k-&gt;&#123;</span><br><span class="line">                     <span class="keyword">if</span>(!map.containsKey(k)) map.put(k, <span class="number">0</span>);</span><br><span class="line">                 &#125;);</span><br><span class="line"></span><br><span class="line">                 <span class="keyword">return</span> map;</span><br><span class="line">             &#125;).collect(Collectors.toList());</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
     <title>实现部门+人员联合查询</title>
     <url>/2021/03/03/%E5%AE%9E%E7%8E%B0%E9%83%A8%E9%97%A8-%E4%BA%BA%E5%91%98%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2/</url>
     <content><![CDATA[<p>实际需求中，我们经常遇到这种场景：</p>
@@ -118,14 +126,6 @@
 <li>遍历查询到的所有结果，取下一层所有能继续展开的维度，递归调用主方法，并将下一层数据作为当前层数据的child对象</li>
 <li>sql语句使用union查询，也可两次查询通过Java拼接，效果一样。</li>
 </ol>
-]]></content>
-  </entry>
-  <entry>
-    <title>通过jdk8特性将list&lt;Map&gt;数据拼接</title>
-    <url>/2021/02/26/%E9%80%9A%E8%BF%87jdk8%E7%89%B9%E6%80%A7%E5%B0%86list-Map-%E6%95%B0%E6%8D%AE%E6%8B%BC%E6%8E%A5/</url>
-    <content><![CDATA[<p>m1为第一个List<Map>集合，m2为第二个，且m1和m2有共同的唯一字段互相绑定</p>
-<span id="more"></span>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Map&lt;String, Object&gt;&gt; merge(List&lt;Map&lt;String, Object&gt;&gt; m1, List&lt;Map&lt;String, Object&gt;&gt; m2)&#123;</span><br><span class="line"></span><br><span class="line">     m1.addAll(m2);</span><br><span class="line"></span><br><span class="line">     Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> m1.stream()</span><br><span class="line">             .collect(Collectors.groupingBy(o-&gt;&#123;</span><br><span class="line">                 <span class="comment">//暂存所有key</span></span><br><span class="line">                 set.addAll(o.keySet());</span><br><span class="line">                 <span class="comment">//按某个唯一字段进行分组</span></span><br><span class="line">                 <span class="keyword">return</span> o.get(<span class="string">&quot;FLAGSTR&quot;</span>);</span><br><span class="line">             &#125;)).entrySet().stream().map(o-&gt;&#123;</span><br><span class="line"></span><br><span class="line">                 <span class="comment">//合并</span></span><br><span class="line">                 Map&lt;String, Object&gt; map = o.getValue().stream().flatMap(m-&gt;&#123;</span><br><span class="line">                     <span class="keyword">return</span> m.entrySet().stream();</span><br><span class="line">                 &#125;).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a,b)-&gt;b));</span><br><span class="line"></span><br><span class="line">                 <span class="comment">//为没有的key赋值0</span></span><br><span class="line">                 set.stream().forEach(k-&gt;&#123;</span><br><span class="line">                     <span class="keyword">if</span>(!map.containsKey(k)) map.put(k, <span class="number">0</span>);</span><br><span class="line">                 &#125;);</span><br><span class="line"></span><br><span class="line">                 <span class="keyword">return</span> map;</span><br><span class="line">             &#125;).collect(Collectors.toList());</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
   </entry>
 </search>
